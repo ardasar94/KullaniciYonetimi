@@ -1,0 +1,48 @@
+﻿@model KullaniciViewModel
+@{
+    ViewData["Title"] = "İşlemler";
+}
+
+
+<form asp-action="index" enctype="multipart/form-data" asp-controller="EditSettings" method="post">
+    <h4>Ad ve Soyad Değiştir</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.Id" />
+    <div class="form-group">
+        <label asp-for="@Model.Ad"></label>
+        <input asp-for="@Model.Ad" class="form-control" />
+        <span asp-validation-for="@Model.Ad" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Soyad"></label>
+        <input asp-for="@Model.Soyad" class="form-control" />
+        <span asp-validation-for="@Model.Soyad" class="text-danger"></span>
+    </div>
+    <input type="hidden" asp-for="@Model.ResimYolu" />
+    <img src="~/uploads/@Model.ResimYolu" class="img-thumbnail" alt="resim" style="height:12rem; width:12rem" />
+    <div class="custom-file mt-3">
+        <input type="file" asp-for="@Model.Resim" class="custom-file-input" />
+        <label class="custom-file-label" asp-for="@Model.Resim">
+            Dosya Seçiniz
+        </label>
+    </div>
+    <span asp-validation-for="Resim"></span>
+    <br />
+    <button class="btn btn-primary mt-4">Kaydet</button>
+</form>
+
+
+@section scripts{
+    <script>
+        document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+            var nextSibling = e.target.nextElementSibling;
+            try {
+                var fileName = this.files[0].name;
+                nextSibling.innerText = fileName;
+            } catch (e) {
+                nextSibling.innerText = "Dosya seçiniz";
+            }
+        });
+    </script>
+} 
